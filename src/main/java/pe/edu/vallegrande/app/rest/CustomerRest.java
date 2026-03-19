@@ -29,14 +29,20 @@ public class CustomerRest {
         return customerService.findById(id);
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public Mono<Customer> save(@RequestBody Customer customer) {
         return customerService.save(customer);
     }
 
-    @PutMapping ("/update")
-    public Mono<Customer> update(@RequestBody Customer customer) {
+    @PutMapping("/{id}")
+    public Mono<Customer> update(@PathVariable String id, @RequestBody Customer customer) {
+        customer.setId(id); // Asegura que se actualice el registro enviado en la URL
         return customerService.update(customer);
+    }
+    
+    @DeleteMapping("/{id}")
+    public Mono<Customer> delete(@PathVariable String id) { // Cambiado de Void a Customer
+        return customerService.deleteById(id);
     }
 
 }
